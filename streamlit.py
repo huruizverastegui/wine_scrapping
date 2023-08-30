@@ -109,7 +109,7 @@ chart_color = (
    	x = alt.Y('price_usd' , scale=alt.Scale(type='log')),
    	y = alt.Y('vivino_rating' , scale=alt.Scale(domain=[data['vivino_rating'].min(), data['vivino_rating'].max()])),
    	#y='vivino_rating' , 
-   	color=alt.Color('log_fit_delta_relative').scale(scheme='redyellowgreen'),
+   	color=alt.Color('log_fit_delta_relative',legend=None).scale(scheme='redyellowgreen'),
    	tooltip=['price_usd','vivino_rating','Name','confidence','log_fit_delta_relative']
    	#'IDS link','vivino_url'],
 
