@@ -73,6 +73,14 @@ regions = st.multiselect(
 if len(regions)>0:
 	data=data[data['vivino_region'].isin(regions)]
 
+#choose the price range 
+values = st.slider(
+    'Choose the price range',
+    0, 500, (0, 500))
+
+#data=data[data['price_usd'].isin(values)]
+
+data=data[data['price_usd'].between(*values)]
 
 #choose a wine directly
 
@@ -83,17 +91,16 @@ wine = st.multiselect(
 if len(wine)>0:
 	data=data[data['Name'].isin(wine)]
 
+# Search by keyword
 
-#choose the price range 
-values = st.slider(
-    'Choose the price range',
-    0, 500, (0, 500))
+data['name_lower']=data['Name'].str.lower()
+keyword = st.text_input('Or search a keyword', value="")
 
-#data=data[data['price_usd'].isin(values)]
-
-data=data[data['price_usd'].between(*values)]
+if len(keyword)>0:
+	data=data[data['name_lower'].str.contains(keyword)]
 
 
+#sort by price asc
 data=data.sort_values(by='price_usd', ascending=True)
 
 # fit a log regression on the rating vs price
