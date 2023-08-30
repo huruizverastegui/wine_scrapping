@@ -1,0 +1,154 @@
+
+import streamlit as st
+st.set_page_config(layout="wide")
+
+import pandas as pd
+import altair as alt
+import numpy as np
+
+import matplotlib as mpl
+
+
+st.write("Psss, come here I've heard you want to buy some wine ... ")
+
+st.title ("Best app in the world")
+
+#st.header("this is the markdown")
+#st.markdown("this is the header")
+#st.subheader("this is the subheader")
+#st.caption("this is the caption")
+
+
+# load the dataframe 
+
+@st.cache_data
+def get_data():
+    #AWS_BUCKET_URL = "https://streamlit-demo-data.s3-us-west-2.amazonaws.com"
+    df = pd.read_csv("wine_diplo_2023_28Aug.csv")
+    return df
+    #return df.set_index("country")
+
+
+df = get_data()
+
+
+
+#make sure the price and rating are floats 
+
+#remove commas in the price and - in vivino rating
+df['price_usd'] = df['price_usd'].replace({',': ''}, regex=True)
+df['vivino_rating'] = df['vivino_rating'].replace({'-': '0'}, regex=True)
+
+
+df['price_usd'] = df['price_usd'].astype(float) #(or int)
+df['vivino_rating'] = df['vivino_rating'].astype(float) #(or int)
+
+#get log of price 
+df['price_usd_log'] = df['price_usd'].astype(float) #(or int)
+
+#keep confidence >65 only 
+df=df[df['confidence']>65]
+
+#keep only where we have vivino ratings
+df=df[df['vivino_rating']>0]
+
+# choose countries
+
+#choose the countries
+countries = st.multiselect(
+    "Choose countries", list(df.country.unique())
+)
+
+#refine dataset
+#data = df.loc[countries]
+if len(countries)>0:
+	data=df[df['country'].isin(countries)]
+else:
+	data=df
+
+#choose the regions
+
+regions = st.multiselect(
+    "Choose regions", list(data.vivino_region.unique())
+)
+
+if len(regions)>0:
+	data=data[data['vivino_region'].isin(regions)]
+
+#choose the price range 
+values = st.slider(
+    'Choose the price range',
+    0, 500, (0, 30))
+
+#data=data[data['price_usd'].isin(values)]
+
+data=data[data['price_usd'].between(*values)]
+
+
+data=data.sort_values(by='price_usd', ascending=True)
+
+# fit a log regression on the rating vs price
+fit = np.polyfit(np.log(list(data['price_usd'])), list(data['vivino_rating']) , 1)
+
+# calculate deviation vs fit in absolute and relatvie 
+data['log_fit_delta']=data['vivino_rating']-(fit[1] + fit[0] * np.log(data['price_usd']))
+data['log_fit_delta_relative']=data['log_fit_delta'] / (fit[1] + fit[0] * np.log(data['price_usd']))
+
+
+# color coding = relative delta vs log fit
+
+chart_no_color = (
+   alt.Chart(data).mark_circle().encode(   
+   	x = alt.Y('price_usd' , scale=alt.Scale(type='log')),
+   	y = alt.Y('vivino_rating' , scale=alt.Scale(domain=[data['vivino_rating'].min(), data['vivino_rating'].max()])),
+   	tooltip=['price_usd','vivino_rating','Name','confidence',]
+   	#'IDS link','vivino_url'],
+
+   	))
+
+chart_color = (
+   alt.Chart(data).mark_circle().encode(   
+   	x = alt.Y('price_usd' , scale=alt.Scale(type='log')),
+   	y = alt.Y('vivino_rating' , scale=alt.Scale(domain=[data['vivino_rating'].min(), data['vivino_rating'].max()])),
+   	#y='vivino_rating' , 
+   	color=alt.Color('log_fit_delta_relative').scale(scheme='redyellowgreen'),
+   	tooltip=['price_usd','vivino_rating','Name','confidence','log_fit_delta_relative']
+   	#'IDS link','vivino_url'],
+
+   	)
+    )
+   
+
+
+chart=chart_color + chart_no_color.transform_regression('price_usd', 'vivino_rating', method='log').mark_line()
+st.altair_chart(chart, use_container_width=True)
+
+# order the dataset by delta relative and keep only top 10
+data_top=data.sort_values('log_fit_delta_relative', ascending=False)
+data_top=data_top[['Name','country','vivino_region','price_usd','vivino_rating','IDS link','vivino_url']]
+data_top=data_top.head(10)
+
+
+st.header("top 10 wine based on your criterias")
+#st.dataframe(data_top.reset_index(drop=True).style.applymap(color_column, subset=['vivino_rating']))
+
+def make_clickable_buy(link):
+    return f'<a target="_blank" href="{link}">"Buy Now"</a>'
+
+def make_clickable_vivino(link):
+    return f'<a target="_blank" href="{link}">"Check it on Vivino"</a>'
+
+data_top['IDS link'] = df['IDS link'].apply(make_clickable_buy)
+data_top['vivino_url'] = df['vivino_url'].apply(make_clickable_vivino)
+data_top = data_top.to_html(escape=False)
+st.write(data_top, unsafe_allow_html=True)
+
+#st.dataframe(data_top.style\
+#	.background_gradient(axis=None, cmap='RdYlGn_r',subset=['price_usd'])
+#	.background_gradient(axis=None, cmap='RdYlGn',subset=['vivino_rating'])
+#	)
+
+
+
+
+
