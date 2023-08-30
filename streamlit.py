@@ -97,7 +97,7 @@ data['name_lower']=data['Name'].str.lower()
 keyword = st.text_input('Or search a keyword', value="")
 
 if len(keyword)>0:
-	data=data[data['name_lower'].str.contains(keyword)]
+	data=data[data['name_lower'].str.contains(keyword.lower())]
 
 
 #sort by price asc
