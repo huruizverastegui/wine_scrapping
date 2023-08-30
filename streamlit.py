@@ -123,7 +123,7 @@ st.altair_chart(chart, use_container_width=True)
 
 # order the dataset by delta relative and keep only top 10
 data_top=data.sort_values('log_fit_delta_relative', ascending=False)
-data_top=data_top[['Name','country','vivino_region','price_usd','vivino_rating','IDS link','vivino_url']]
+data_top=data_top[['Name','country','vivino_region','price_usd','vivino_rating','IDS link','vivino_url','confidence']]
 data_top=data_top.head(10)
 
 
