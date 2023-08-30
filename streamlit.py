@@ -146,6 +146,14 @@ data_top=data_top.head(10)
 
 
 st.header("top 10 wine based on your criterias")
+
+# define color coding for the confidence column
+
+def color_confidence(val):
+    color = 'red' if val<=65 else 'orange' if val<=85 else 'green'
+    return f'background-color: {color}'
+
+
 #st.dataframe(data_top.reset_index(drop=True).style.applymap(color_column, subset=['vivino_rating']))
 
 def make_clickable_buy(link):
@@ -156,6 +164,9 @@ def make_clickable_vivino(link):
 
 data_top['IDS link'] = df['IDS link'].apply(make_clickable_buy)
 data_top['vivino_url'] = df['vivino_url'].apply(make_clickable_vivino)
+
+data_top=data_top.style.applymap(color_confidence, subset=['confidence'])
+
 data_top = data_top.to_html(escape=False)
 st.write(data_top, unsafe_allow_html=True)
 
@@ -163,8 +174,6 @@ st.write(data_top, unsafe_allow_html=True)
 #	.background_gradient(axis=None, cmap='RdYlGn_r',subset=['price_usd'])
 #	.background_gradient(axis=None, cmap='RdYlGn',subset=['vivino_rating'])
 #	)
-
-
 
 
 
