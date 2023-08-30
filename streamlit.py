@@ -73,6 +73,17 @@ regions = st.multiselect(
 if len(regions)>0:
 	data=data[data['vivino_region'].isin(regions)]
 
+
+#choose a wine directly
+
+wine = st.multiselect(
+    "Choose a wine:", list(data.Name.unique())
+)
+
+if len(wine)>0:
+	data=data[data['Name'].isin(wine)]
+
+
 #choose the price range 
 values = st.slider(
     'Choose the price range',
@@ -97,7 +108,7 @@ data['log_fit_delta_relative']=data['log_fit_delta'] / (fit[1] + fit[0] * np.log
 
 chart_no_color = (
    alt.Chart(data).mark_circle().encode(   
-   	x = alt.Y('price_usd' , scale=alt.Scale(type='log')),
+   	x = alt.Y('price_usd' , scale=alt.Scale(type='log',domain=[data['price_usd'].min(), data['price_usd'].max()])),
    	y = alt.Y('vivino_rating' , scale=alt.Scale(domain=[data['vivino_rating'].min(), data['vivino_rating'].max()])),
    	tooltip=['price_usd','vivino_rating','Name','confidence',]
    	#'IDS link','vivino_url'],
@@ -106,7 +117,7 @@ chart_no_color = (
 
 chart_color = (
    alt.Chart(data).mark_circle().encode(   
-   	x = alt.Y('price_usd' , scale=alt.Scale(type='log')),
+   	x = alt.Y('price_usd' , scale=alt.Scale(type='log',domain=[data['price_usd'].min(), data['price_usd'].max()])),
    	y = alt.Y('vivino_rating' , scale=alt.Scale(domain=[data['vivino_rating'].min(), data['vivino_rating'].max()])),
    	#y='vivino_rating' , 
    	color=alt.Color('log_fit_delta_relative',legend=None).scale(scheme='redyellowgreen'),
