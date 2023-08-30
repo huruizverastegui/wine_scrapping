@@ -6,8 +6,6 @@ import pandas as pd
 import altair as alt
 import numpy as np
 
-import matplotlib as mpl
-
 
 st.write("Psss, come here I've heard you want to buy some wine ... ")
 
