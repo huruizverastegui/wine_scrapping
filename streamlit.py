@@ -168,7 +168,7 @@ data_top['vivino_url'] = df['vivino_url'].apply(make_clickable_vivino)
 
 data_top=data_top.style\
 	.applymap(color_confidence, subset=['confidence'])\
-	.format({"price_usd": "{:.1f}"})
+	.format({"price_usd": "{:.1f}","vivino_rating": "{:.1f}"})
 	#.format({"vivino_rating": "{:.1f}"})
 
 
