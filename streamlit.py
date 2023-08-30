@@ -76,7 +76,7 @@ if len(regions)>0:
 #choose the price range 
 values = st.slider(
     'Choose the price range',
-    0, 500, (0, 30))
+    0, 500, (0, 500))
 
 #data=data[data['price_usd'].isin(values)]
 
