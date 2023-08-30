@@ -9,7 +9,7 @@ import numpy as np
 
 st.write("Psss, come here I've heard you want to buy some wine ... ")
 
-st.title ("Best app in the world")
+st.title ("Wine Genie - Beta")
 
 #st.header("this is the markdown")
 #st.markdown("this is the header")
@@ -30,19 +30,20 @@ def get_data():
 df = get_data()
 
 
-
 #make sure the price and rating are floats 
 
 #remove commas in the price and - in vivino rating
 df['price_usd'] = df['price_usd'].replace({',': ''}, regex=True)
 df['vivino_rating'] = df['vivino_rating'].replace({'-': '0'}, regex=True)
 
-
 df['price_usd'] = df['price_usd'].astype(float) #(or int)
 df['vivino_rating'] = df['vivino_rating'].astype(float) #(or int)
 
-#get log of price 
-df['price_usd_log'] = df['price_usd'].astype(float) #(or int)
+
+#round price and vivino rating
+
+df['price_usd']=df['price_usd'].round(2)
+df['vivino_rating']=df['vivino_rating'].round(2)
 
 #keep confidence >65 only 
 df=df[df['confidence']>65]
@@ -165,7 +166,11 @@ def make_clickable_vivino(link):
 data_top['IDS link'] = df['IDS link'].apply(make_clickable_buy)
 data_top['vivino_url'] = df['vivino_url'].apply(make_clickable_vivino)
 
-data_top=data_top.style.applymap(color_confidence, subset=['confidence'])
+data_top=data_top.style\
+	.applymap(color_confidence, subset=['confidence'])\
+	.format({"price_usd": "{:.1f}"})
+	#.format({"vivino_rating": "{:.1f}"})
+
 
 data_top = data_top.to_html(escape=False)
 st.write(data_top, unsafe_allow_html=True)
@@ -174,6 +179,11 @@ st.write(data_top, unsafe_allow_html=True)
 #	.background_gradient(axis=None, cmap='RdYlGn_r',subset=['price_usd'])
 #	.background_gradient(axis=None, cmap='RdYlGn',subset=['vivino_rating'])
 #	)
+
+
+st.caption("\
+	\
+	Credit: Hugo Ruiz Verastegui - hugo.ruiz.verastegui@gmail.com ")
 
 
 
