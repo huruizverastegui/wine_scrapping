@@ -82,7 +82,7 @@ values = st.slider(
 min_confidence=st.slider('define mininum confidence', 0, 100, 75)
 #filter confidence  
 
-df=df[df['confidence']>min_confidence]
+data=data[data['confidence']>min_confidence]
 
 #data=data[data['price_usd'].isin(values)]
 
