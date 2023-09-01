@@ -45,8 +45,7 @@ df['vivino_rating'] = df['vivino_rating'].astype(float) #(or int)
 df['price_usd']=df['price_usd'].round(2)
 df['vivino_rating']=df['vivino_rating'].round(2)
 
-#keep confidence >65 only 
-#df=df[df['confidence']>65]
+
 
 #keep only where we have vivino ratings
 df=df[df['vivino_rating']>0]
@@ -78,6 +77,12 @@ if len(regions)>0:
 values = st.slider(
     'Choose the price range',
     0, 500, (0, 500))
+
+#confidence filter
+min_confidence=st.slider('define mininum confidence', 0, 100, 75)
+#filter confidence  
+
+df=df[df['confidence']>min_confidence]
 
 #data=data[data['price_usd'].isin(values)]
 
