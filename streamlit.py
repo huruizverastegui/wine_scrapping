@@ -46,7 +46,7 @@ df['price_usd']=df['price_usd'].round(2)
 df['vivino_rating']=df['vivino_rating'].round(2)
 
 #keep confidence >65 only 
-df=df[df['confidence']>65]
+#df=df[df['confidence']>65]
 
 #keep only where we have vivino ratings
 df=df[df['vivino_rating']>0]
@@ -143,10 +143,10 @@ st.altair_chart(chart, use_container_width=True)
 # order the dataset by delta relative and keep only top 10
 data_top=data.sort_values('log_fit_delta_relative', ascending=False)
 data_top=data_top[['Name','country','vivino_region','price_usd','vivino_rating','IDS link','vivino_url','confidence']]
-data_top=data_top.head(10)
+data_top=data_top.head(100)
 
 
-st.header("top 10 wine based on your criterias")
+st.header("top 100 wines based on your criterias")
 
 # define color coding for the confidence column
 
