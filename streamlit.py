@@ -11,6 +11,13 @@ st.write("Psss, come here I've heard you want to buy some wine ... ")
 
 st.title ("Wine Genie - Beta")
 
+st.caption("\
+	\
+	Credit: Hugo Ruiz Verastegui - hugo.ruiz.verastegui@gmail.com ")
+
+
+
+
 #st.header("this is the markdown")
 #st.markdown("this is the header")
 #st.subheader("this is the subheader")
@@ -184,11 +191,5 @@ st.write(data_top, unsafe_allow_html=True)
 #	.background_gradient(axis=None, cmap='RdYlGn_r',subset=['price_usd'])
 #	.background_gradient(axis=None, cmap='RdYlGn',subset=['vivino_rating'])
 #	)
-
-
-st.caption("\
-	\
-	Credit: Hugo Ruiz Verastegui - hugo.ruiz.verastegui@gmail.com ")
-
 
 
