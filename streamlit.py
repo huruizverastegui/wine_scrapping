@@ -22,7 +22,7 @@ st.title ("Wine Genie - Beta")
 @st.cache_data
 def get_data():
     #AWS_BUCKET_URL = "https://streamlit-demo-data.s3-us-west-2.amazonaws.com"
-    df = pd.read_csv("wine_diplo_2023_28Aug.csv")
+    df = pd.read_csv("wine_diplo_2024_21Feb.csv")
     return df
     #return df.set_index("country")
 
