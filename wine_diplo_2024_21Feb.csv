@@ -1,4 +1,4 @@
-,Price USD,Name,IDS link,country,vivino_url,vivino_rating,vivino_name,vivino_price,vivino_country,vivino_region,nb_ratings,confidence,price_bucket,confidence bucket
+,price_usd,Name,IDS link,country,vivino_url,vivino_rating,vivino_name,vivino_price,vivino_country,vivino_region,nb_ratings,confidence,price_bucket,confidence bucket
 0,"2,527.65","2016 Chateau.Smith Haut Lafitte Rouge, Pessac -Leognan",https://www.i-d-s.com/dubai/2016-chateau-smith-haut-lafitte-rouge-pessac-leognan-fw1187.html,france,-,-,-,-,-,-,-,4,>100 USD,10
 1,26.55,"L'Héritage` Pouilly-Fumé, Domaine Figeat, Loire, France",https://www.i-d-s.com/dubai/l-h-ritage-pouilly-fum-domaine-figeat-loire-france-fr1339.html,france,https://www.vivino.com/FR/en/wines/1533476,0,Domaine Marchand Val de Loire Pouilly-Fumé 0,—,france,pouilly-fume,10377,34,20 - 30 USD,40
 2,20.5,"Les Hauts de Perganson, Haut-Medoc, Bordeaux",https://www.i-d-s.com/dubai/les-hauts-de-perganson-haut-medoc-bordeaux-fr1334.html,france,-,-,-,-,-,-,-,4,20 - 30 USD,10
