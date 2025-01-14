@@ -139,7 +139,14 @@ chart_color = (
    	x = alt.Y('price_usd' , scale=alt.Scale(type='log',domain=[data['price_usd'].min(), data['price_usd'].max()])),
    	y = alt.Y('vivino_rating' , scale=alt.Scale(domain=[data['vivino_rating'].min(), data['vivino_rating'].max()])),
    	#y='vivino_rating' , 
-   	color=alt.Color('confidence',legend=None).scale(scheme='redyellowgreen'),
+   	# color=alt.Color('confidence',legend=None).scale(scheme='redyellowgreen'),
+	color=alt.Color(
+	'confidence',
+	scale=alt.Scale(
+		domain=[60, 95],  # Explicitly map 0 to 100
+		range=['red', 'yellow', 'green']  # Define the color scheme
+	),
+	legend=None),
    	tooltip=['price_usd','vivino_rating','Name','confidence','log_fit_delta_relative']
    	#'IDS link','vivino_url'],
 
