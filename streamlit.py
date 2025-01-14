@@ -1,4 +1,3 @@
-
 import streamlit as st
 st.set_page_config(layout="wide")
 
@@ -11,6 +10,13 @@ st.write("Psss, come here I've heard you want to buy some wine ... ")
 
 st.title ("Wine Genie - Beta")
 
+st.caption("\
+	\
+	Credit: Hugo Ruiz Verastegui - hugo.ruiz.verastegui@gmail.com ")
+
+
+
+
 #st.header("this is the markdown")
 #st.markdown("this is the header")
 #st.subheader("this is the subheader")
@@ -21,11 +27,10 @@ st.title ("Wine Genie - Beta")
 
 @st.cache_data
 def get_data():
-    #AWS_BUCKET_URL = "https://streamlit-demo-data.s3-us-west-2.amazonaws.com"
-    df = pd.read_csv("wine_diplo_2023_28Aug.csv")
+
+    df = pd.read_csv("wine_diplo_2025_14Jan.csv")
     return df
     #return df.set_index("country")
-
 
 df = get_data()
 
@@ -156,7 +161,7 @@ st.header("top 100 wines based on your criterias")
 # define color coding for the confidence column
 
 def color_confidence(val):
-    color = 'red' if val<=65 else 'orange' if val<=85 else 'green'
+    color = 'red' if val<=6 else 'orange' if val<=8 else 'green'
     return f'background-color: {color}'
 
 
@@ -184,11 +189,3 @@ st.write(data_top, unsafe_allow_html=True)
 #	.background_gradient(axis=None, cmap='RdYlGn_r',subset=['price_usd'])
 #	.background_gradient(axis=None, cmap='RdYlGn',subset=['vivino_rating'])
 #	)
-
-
-st.caption("\
-	\
-	Credit: Hugo Ruiz Verastegui - hugo.ruiz.verastegui@gmail.com ")
-
-
-
