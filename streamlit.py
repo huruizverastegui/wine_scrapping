@@ -28,6 +28,7 @@ st.caption("\
 @st.cache_data
 def get_data():
 
+
     df = pd.read_csv("wine_diplo_2025_14Jan.csv")
     return df
     #return df.set_index("country")
@@ -188,4 +189,4 @@ st.write(data_top, unsafe_allow_html=True)
 #st.dataframe(data_top.style\
 #	.background_gradient(axis=None, cmap='RdYlGn_r',subset=['price_usd'])
 #	.background_gradient(axis=None, cmap='RdYlGn',subset=['vivino_rating'])
-#	)
+
