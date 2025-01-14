@@ -29,7 +29,7 @@ st.caption("\
 def get_data():
 
 
-    df = pd.read_csv("wine_diplo_2025_14Jan_v2.csv")
+    df = pd.read_csv("wine_diplo_2025_14Jan_updated.csv")
     return df
     #return df.set_index("country")
 
@@ -85,10 +85,10 @@ values = st.slider(
     0, 500, (0, 500))
 
 #confidence filter
-min_confidence=st.slider('define mininum confidence', 0, 100, 75)
+min_confidence=st.slider('define mininum confidence', 0, 100, 60)
 #filter confidence  
 
-data=data[data['confidence']>min_confidence]
+data=data[data['confidence']>=min_confidence]
 
 #data=data[data['price_usd'].isin(values)]
 
@@ -139,7 +139,7 @@ chart_color = (
    	x = alt.Y('price_usd' , scale=alt.Scale(type='log',domain=[data['price_usd'].min(), data['price_usd'].max()])),
    	y = alt.Y('vivino_rating' , scale=alt.Scale(domain=[data['vivino_rating'].min(), data['vivino_rating'].max()])),
    	#y='vivino_rating' , 
-   	color=alt.Color('log_fit_delta_relative',legend=None).scale(scheme='redyellowgreen'),
+   	color=alt.Color('confidence',legend=None).scale(scheme='redyellowgreen'),
    	tooltip=['price_usd','vivino_rating','Name','confidence','log_fit_delta_relative']
    	#'IDS link','vivino_url'],
 
@@ -162,7 +162,7 @@ st.header("top 100 wines based on your criterias")
 # define color coding for the confidence column
 
 def color_confidence(val):
-    color = 'red' if val<=6 else 'orange' if val<=8 else 'green'
+    color = 'red' if val<=60 else 'orange' if val<=75 else 'green'
     return f'background-color: {color}'
 
 
