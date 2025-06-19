@@ -28,7 +28,7 @@ st.caption("\
 @st.cache_data
 def get_data():
 
-	# update here with latest file
+	# update here with latest file from the scrapping
     df = pd.read_csv("wine_diplo_2025_19Jun_updated_for_streamlit.csv")
     return df
     #return df.set_index("country")
