@@ -29,7 +29,7 @@ st.caption("\
 def get_data():
 
 
-    df = pd.read_csv("wine_diplo_2025_14Jan_updated.csv")
+    df = pd.read_csv("wine_diplo_2025_19Jun_updated_for_streamlit.csv")
     return df
     #return df.set_index("country")
 
